@@ -36,13 +36,14 @@ public class CSVHandler {
         this.fileName = fileName;
         csvFile = new File(fileName);
         try {
-            if(csvFile.exists())
-                throw new IOException();
-            csvFile.createNewFile();
+            if(csvFile.createNewFile())
+                System.out.println("File " + fileName + " created.");
+            else
+                System.out.println("File " + fileName + " already exists ands will be overwritten.");
         }
         catch(IOException ioExcp){
-            System.out.println("File: " + fileName + " already exists.");
-            return;
+            System.out.println("Error opening file: " + fileName);
+            ioExcp.printStackTrace();
         }
 
         setNumberOfRecords(numberOfRecords);

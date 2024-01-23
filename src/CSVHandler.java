@@ -2,11 +2,9 @@ import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class CSVHandler {
-    private String fileName;
+    final private String fileName;
     File csvFile;
     private int numberOfRecords;
     private int numberOfValues;
@@ -126,7 +124,8 @@ public class CSVHandler {
     }
 
     private String convertToCSV(ArrayList<String> values){
-        return values.stream().collect(Collectors.joining(COMMA_DELIMITER));
+//        return values.stream().collect(Collectors.joining(COMMA_DELIMITER));
+        return String.join(COMMA_DELIMITER,values);
     }
 
     public int getNumberOfRecords() {

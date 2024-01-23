@@ -20,7 +20,7 @@ public class Main {
 
 
 //        dataVector.writeDataVector();
-        GPR gpr = new GPR(dataTensor);
+        GPRCalculator gpr = new GPRCalculator(dataTensor);
         gpr.createModel();
 //        gpr.writeWeights();
 //        gpr.optimiseModel();

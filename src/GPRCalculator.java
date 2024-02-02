@@ -6,10 +6,12 @@ public class GPRCalculator {
     private int numberOfData;
     private int dimensions;
     private boolean modelGenerated;
-    private double modelAlpha = 0.7;
-    private double modelGammaSquared = 1.0e-8;
-    DataTensor data;
 
+    private double modelAlpha = 0.7;
+
+    private double modelGammaSquared = 1.0e-8;
+
+    DataTensor data;
     public GPRCalculator(DataTensor data) {
         numberOfData = data.getNumberOfData();
         dimensions = data.getDimensions();
@@ -51,7 +53,6 @@ public class GPRCalculator {
             prediction += modelWeights[i] * evaluateKernel(coordinates, data.getCoordinates(i), modelAlpha);
         return prediction;
     }
-
     public double getVariance(double[] coordinates){
         if(!modelGenerated)
             throw new IllegalStateException("Cannot get variance before generating model.");
@@ -99,8 +100,16 @@ public class GPRCalculator {
         return modelAlpha;
     }
 
+    public void setModelAlpha(double modelAlpha) {
+        this.modelAlpha = modelAlpha;
+    }
+
     public double getModelGammaSquared() {
         return modelGammaSquared;
+    }
+
+    public void setModelGammaSquared(double modelGammaSquared) {
+        this.modelGammaSquared = modelGammaSquared;
     }
 
     private double[][] createCovariance(double alpha, double gammaSquared){

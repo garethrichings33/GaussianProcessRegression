@@ -3,6 +3,8 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Scanner;
 
 public class GPR implements ActionListener {
     public static void main(String[] args){
@@ -15,6 +17,7 @@ public class GPR implements ActionListener {
     private final JButton predictionOutputFileButton;
     private final JButton fitButton;
     private final JButton predictionsButton;
+    private final JButton howToButton;
     private final JLabel label;
     private final JLabel message;
 
@@ -23,9 +26,12 @@ public class GPR implements ActionListener {
     private final String predictionOutputFileButtonLabel;
     private final String fitButtonLabel;
     private final String predictionsButtonLabel;
+    private final String howToButtonLabel;
     private String trainingFileName = null;
     private String inputDataFileName = null;
     private String predictionsFileName = null;
+    private String helpText;
+    private boolean helpNotRead = true;
 
     private final GPRModelHandler gprModelHandler;
 
@@ -60,6 +66,11 @@ public class GPR implements ActionListener {
         predictionsButton.addActionListener(this);
         predictionsButton.setBounds(30, 180, 200, 30);
 
+        howToButtonLabel = "How to use";
+        howToButton = new JButton(howToButtonLabel);
+        howToButton.addActionListener(this);
+        howToButton.setBounds(290,330,100,30);
+
         label = new JLabel();
         label.setBounds(20, 220, 360, 30);
 
@@ -73,12 +84,39 @@ public class GPR implements ActionListener {
         frame.add(message);
         frame.add(fitButton);
         frame.add(predictionsButton);
+        frame.add(howToButton);
 
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
         gprModelHandler = new GPRModelHandler();
+    }
+
+    private void displayhelp(){
+        if(helpNotRead) {
+            getHelpText();
+            helpNotRead = false;
+        }
+
+        JFrame helpFrame = new JFrame("How to use");
+        helpFrame.setSize(400,400);
+
+        JTextArea help = new JTextArea(helpText);
+        int textWidth = frame.getWidth() - 50;
+        int textHeight = frame.getHeight() - 50;
+        help.setPreferredSize(new Dimension(textWidth, textHeight));
+        help.setLineWrap(true);
+        help.setFont(new Font("Arial", Font.PLAIN, 16));
+        help.setEditable(false);
+
+        JScrollPane scrollPane = new JScrollPane(help);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        helpFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+        helpFrame.getContentPane().setLayout(new FlowLayout());
+        helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        helpFrame.setVisible(true);
     }
 
     @Override
@@ -96,6 +134,9 @@ public class GPR implements ActionListener {
                 message.setText(gprModelHandler.getPredictions());
             else
                 message.setText("Create model before getting predictions.");
+        }
+        else if (command.equals(howToButtonLabel)) {
+            displayhelp();
         }
     }
 
@@ -149,6 +190,22 @@ public class GPR implements ActionListener {
                         label.setText("Save predictions file cancelled");
                 }
             }
+        }
+    }
+
+    private void getHelpText(){
+        StringBuilder builder = new StringBuilder();
+        try {
+            Scanner scanner = new Scanner(new File("src/helptext.txt"));
+            while(scanner.hasNextLine()){
+                builder.append(scanner.nextLine());
+            }
+            scanner.close();
+            helpText = builder.toString();
+        }
+        catch (FileNotFoundException excp){
+            helpText = "Help file not found.";
+            message.setText(helpText);
         }
     }
 }

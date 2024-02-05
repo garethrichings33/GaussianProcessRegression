@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GPR implements ActionListener {
@@ -124,8 +123,8 @@ public class GPR implements ActionListener {
         }
 
         JFrame helpFrame = new JFrame("How to use");
-        helpFrame.setSize(600,700);
-        helpFrame.getContentPane().setLayout(new FlowLayout());
+        helpFrame.setSize(700,700);
+        helpFrame.getContentPane().setLayout(new BorderLayout());
 
         JTextPane help = new JTextPane();
         SimpleAttributeSet attributeSet = new SimpleAttributeSet();
@@ -133,8 +132,8 @@ public class GPR implements ActionListener {
         help.setContentType("text/html");
         help.setText(helpText);
 
-        int textWidth = helpFrame.getWidth() - 50;
-        int textHeight = helpFrame.getHeight() - 50;
+        int textWidth = helpFrame.getWidth() - 100;
+        int textHeight = helpFrame.getHeight() - 100;
         help.setPreferredSize(new Dimension(textWidth, textHeight));
         help.setFont(new Font("Arial", Font.PLAIN, 14));
         help.setEditable(false);
@@ -142,6 +141,7 @@ public class GPR implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(help);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+//        scrollPane.set;
 
         helpFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

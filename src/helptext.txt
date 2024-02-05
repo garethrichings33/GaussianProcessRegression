@@ -1,9 +1,37 @@
-<body style="font-family:sans-serif">
-<p><b>Gaussian Process Regression (GPR) Help Text</b></p>
+<!DOCTYPE html>
+<html>
+<style>
+body 
+{font-family: sans-serif;
+ font-size: 14;
+}
+
+h1
+{font-size: 16;}
+
+sub,
+sup {
+  font-size: 65%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+</style>
+
+<body>
+<h1><b>Gaussian Process Regression (GPR) Help Text</b></h1>
 
 <p>This code will take a one- or multi-dimensional training dataset and run a GPR on the dataset to provide a model, using two hyperparameters (&alpha and &gamma<sup>2</sup>). The user can alter these hyperparameters once the training data has been provided as well as after a fit has been carried out. Once a fit has been performed, the user can provide a new set of coordinates and use the model to generate predictions from those.</p>
 
-<p>The GPR uses a squared-exponential covariance function: exp[-&alpha|<b>x</b>-<b>x</b><sub>i</sub>|<sup>2</sup>]. The function is centred at point <b>x</b>_{i}, its width being controlled by <mo>&alpha</mo> (NB Full-width at half-maximum = 2&#8730(ln(2<sup>1/&alpha</sup>)).</p>
+<p>The GPR uses a squared-exponential covariance function: exp[-&alpha|<b>x</b>-<b>x</b><sub>i</sub>|<sup>2</sup>]. The function is centred at point <b>x</b><sub>i</sub>, its width being controlled by <mo>&alpha</mo> (NB Full-width at half-maximum = 2&#8730(ln(2<sup>1/&alpha</sup>)).</p>
 
 <p>The interface is a simple set of buttons to perform the necessary operations:</p>
 
@@ -16,7 +44,7 @@
 <li>Buttons "Choose width parameter (alpha)" and "Choose uncertainty parameter (gamma^2)" can be used to enter custom values of the relevant hyperparameters. Note that &alpha must be positive and &gamma<sup>2</sup> must be non-negative. Once new values are chosen the "Generate GPR Model" must be pressed to (re)generate the GPR model; this is not done automatically.</li>
 </ul>
 
-<li>After the "Generate GPR Model" button has been pressed, the model will be trained and the "Open input data file" button will become active. Press this to choose a file containing a set of coordinates, (<b>x</b><sup>*</sup><sub>j</sub>) where we want to generate predictions of the function value, (f(<b>x</b><sup>*</sup><sub>j</sub>)), using the GPR model. This file must be provided in CSV format. There is no limit on the number of points provided, but they must have the same dimensionality as the training dataset.</li>
+<li>After the "Generate GPR Model" button has been pressed, the model will be trained and the "Open input data file" button will become active. Press this to choose a file containing a set of coordinates, (<b>x</b><sup>*</sup><sub>j</sub>), where we want to generate predictions of the function value, (f(<b>x</b><sup>*</sup><sub>j</sub>)), using the GPR model. This file must be provided in CSV format. There is no limit on the number of points provided, but they must have the same dimensionality as the training dataset.</li>
 
 <li>Following an input data file being provided, the "Generate predictions" button becomes active. Press this to calculate the predicted function values at the provided points.</li>
 
@@ -26,3 +54,4 @@
 </ul>
 </ul>
 </body>
+</html>

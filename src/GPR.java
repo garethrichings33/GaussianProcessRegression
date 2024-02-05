@@ -1,9 +1,14 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GPR implements ActionListener {
@@ -36,6 +41,7 @@ public class GPR implements ActionListener {
     private String predictionsFileName = null;
     private String helpText;
     private boolean helpNotRead = true;
+    private ArrayList<String> helpTextList = new ArrayList<>();
 
     private final GPRModelHandler gprModelHandler;
 
@@ -122,14 +128,18 @@ public class GPR implements ActionListener {
         }
 
         JFrame helpFrame = new JFrame("How to use");
-        helpFrame.setSize(600,600);
+        helpFrame.setSize(600,700);
 
-        JTextArea help = new JTextArea(helpText);
+//        JTextArea help = new JTextArea(helpText);
+        JTextPane help = new JTextPane();
+        SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+        help.setCharacterAttributes(attributeSet, true);
+        help.setContentType("text/html");
+        help.setText(helpText);
+
         int textWidth = helpFrame.getWidth() - 50;
         int textHeight = helpFrame.getHeight() - 50;
-        System.out.println(textHeight);
         help.setPreferredSize(new Dimension(textWidth, textHeight));
-        help.setLineWrap(true);
         help.setFont(new Font("Arial", Font.PLAIN, 14));
         help.setEditable(false);
 
@@ -336,6 +346,15 @@ public class GPR implements ActionListener {
         catch (FileNotFoundException excp){
             helpText = "Help file not found.";
             message.setText(helpText);
+        }
+
+        helpTextList.clear();
+        int startIndex = 0;
+        int endIndex;
+        while(builder.indexOf("\\n") != -1){
+            endIndex = builder.indexOf("\\n");
+            helpTextList.add(builder.substring(startIndex, endIndex));
+            builder.delete(startIndex, endIndex+2);
         }
     }
 }

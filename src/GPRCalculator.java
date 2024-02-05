@@ -7,7 +7,7 @@ public class GPRCalculator {
     private int dimensions;
     private boolean modelGenerated;
 
-    private double modelAlpha = 0.7;
+    private double modelAlpha = 0.5;
 
     private double modelGammaSquared = 1.0e-8;
 

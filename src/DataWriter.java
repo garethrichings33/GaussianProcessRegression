@@ -4,7 +4,7 @@ public class DataWriter {
     static public void tensorToCSV(DataTensor dataTensor, CSVHandler csvHandler){
         boolean hasVariance = dataTensor.isHasVariance();
         int numberOfRecords = csvHandler.getNumberOfRecords();
-        int numberOfValues = csvHandler.getNumberOfValues();
+//        int numberOfValues = csvHandler.getNumberOfValues();
         int dimensions = dataTensor.getDimensions();
 
         ArrayList<ArrayList<String>> list = new ArrayList<>();

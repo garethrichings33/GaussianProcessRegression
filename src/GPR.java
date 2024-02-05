@@ -23,6 +23,8 @@ public class GPR implements ActionListener {
     private final JButton howToButton;
     private final JLabel label;
     private final JLabel message;
+    private final JLabel alphaLabel;
+    private final JLabel gammaLabel;
 
     private final String trainingFileButtonLabel;
     private final String inputDataFileButtonLabel;
@@ -39,10 +41,13 @@ public class GPR implements ActionListener {
     private boolean helpNotRead = true;
 
     private final GPRModelHandler gprModelHandler;
+    private final JFileChooser fileChooser;
 
     public GPR() {
+        gprModelHandler = new GPRModelHandler();
+
         frame = new JFrame("Gaussian Process Regression");
-        frame.setSize(400,400);
+        frame.setSize(400,500);
 
         FrameWithActionListener fileFrame = new FrameWithActionListener();
 
@@ -90,19 +95,27 @@ public class GPR implements ActionListener {
         howToButtonLabel = "How to use";
         howToButton = new JButton(howToButtonLabel);
         howToButton.addActionListener(this);
-        howToButton.setBounds(290,330,100,30);
+        howToButton.setBounds(290,430,100,30);
+
+        alphaLabel = new JLabel();
+        alphaLabel.setBounds(20, 310, 200, 30);
+
+        gammaLabel = new JLabel();
+        gammaLabel.setBounds(20, 340, 200, 30);
 
         label = new JLabel();
-        label.setBounds(20, 300, 360, 30);
+        label.setBounds(20, 410, 360, 30);
 
         message = new JLabel();
-        message.setBounds(20, 340, 360, 30);
+        message.setBounds(20, 440, 360, 30);
 
         frame.add(trainingFileButton);
         frame.add(inputDataFileButton);
         frame.add(predictionOutputFileButton);
         frame.add(label);
         frame.add(message);
+        frame.add(alphaLabel);
+        frame.add(gammaLabel);
         frame.add(fitButton);
         frame.add(predictionsButton);
         frame.add(chooseAlphaButton);
@@ -113,7 +126,7 @@ public class GPR implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        gprModelHandler = new GPRModelHandler();
+        fileChooser = new JFileChooser(FileSystemView.getFileSystemView());
     }
 
     private void displayhelp(){
@@ -173,6 +186,7 @@ public class GPR implements ActionListener {
                     message.setText("Alpha set to: " + gprModelHandler.getModelAlpha());
                     error.setText("");
                     alphaFrame.setSize(frameWidth,frameHeight);
+                    setAlphaLabel();
                 }
                 catch (NumberFormatException excp){
                     alphaFrame.setSize(frameWidth, 100);
@@ -219,6 +233,7 @@ public class GPR implements ActionListener {
                     message.setText("Gamma^2 set to: " + gprModelHandler.getModelGammaSquared());
                     error.setText("");
                     gammaFrame.setSize(frameWidth,frameHeight);
+                    setGammaSquaredLabel();
                 }
                 catch (NumberFormatException excp){
                     gammaFrame.setSize(frameWidth, 100);
@@ -280,7 +295,6 @@ public class GPR implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView());
             int dialog = 0;
             message.setText("");
 
@@ -292,7 +306,9 @@ public class GPR implements ActionListener {
                     gprModelHandler.initialiseGPR(trainingFileName);
                     fitButton.setEnabled(true);
                     chooseAlphaButton.setEnabled(true);
+                    setAlphaLabel();
                     chooseGammaButton.setEnabled(true);
+                    setGammaSquaredLabel();
                 }
                 else
                     label.setText("Open training file cancelled.");
@@ -344,5 +360,13 @@ public class GPR implements ActionListener {
             message.setText(helpText);
         }
 
+    }
+
+    private void setAlphaLabel(){
+        alphaLabel.setText("Alpha = " + gprModelHandler.getModelAlpha());
+    }
+
+    private void setGammaSquaredLabel(){
+        gammaLabel.setText("Gamma^2 = " + gprModelHandler.getModelGammaSquared());
     }
 }

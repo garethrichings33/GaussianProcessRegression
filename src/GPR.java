@@ -1,8 +1,5 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,7 +38,6 @@ public class GPR implements ActionListener {
     private String predictionsFileName = null;
     private String helpText;
     private boolean helpNotRead = true;
-    private ArrayList<String> helpTextList = new ArrayList<>();
 
     private final GPRModelHandler gprModelHandler;
 
@@ -129,8 +125,8 @@ public class GPR implements ActionListener {
 
         JFrame helpFrame = new JFrame("How to use");
         helpFrame.setSize(600,700);
+        helpFrame.getContentPane().setLayout(new FlowLayout());
 
-//        JTextArea help = new JTextArea(helpText);
         JTextPane help = new JTextPane();
         SimpleAttributeSet attributeSet = new SimpleAttributeSet();
         help.setCharacterAttributes(attributeSet, true);
@@ -145,9 +141,9 @@ public class GPR implements ActionListener {
 
         JScrollPane scrollPane = new JScrollPane(help);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         helpFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
-        helpFrame.getContentPane().setLayout(new FlowLayout());
         helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         helpFrame.setVisible(true);
     }
@@ -348,13 +344,5 @@ public class GPR implements ActionListener {
             message.setText(helpText);
         }
 
-        helpTextList.clear();
-        int startIndex = 0;
-        int endIndex;
-        while(builder.indexOf("\\n") != -1){
-            endIndex = builder.indexOf("\\n");
-            helpTextList.add(builder.substring(startIndex, endIndex));
-            builder.delete(startIndex, endIndex+2);
-        }
     }
 }

@@ -1,21 +1,28 @@
-Gaussian Process Regression (GPR) Help Text<br>
-<br>
-This code will take a one- or multi-dimensional training dataset and run a GPR on the dataset to provide a model, using two hyperparameters (\alpha and \gamma^{2}). The user can alter these hyperparameters once the training data has been provided as well as after a fit has been carried out. Once a fit has been performed, the user can provide a new set of coordinates and use the model to generate predictions from those.<br>
-<br>
- - The GPR uses a squared-exponential covariance function: exp[-\alpha * (x-x_{i})^{2}]. The function is centred at point x_{i}, its width being controlled by \alpha.<br>
-<br>
-The interface is a simple set of buttons to perform the necessary operations:<br>
-<br>
- - Initially only the "Open training data file" button is active. Click this to load a training dataset. The dataset must be in the CSV format, the first N columns being the coordinates (x_{i}), the (N+1)th being the value of the function there (f(x_{I})).<br>
-<br> 
- - Once the training dataset has been loaded, three more buttons become active: "Generate GPR Model"; "Choose width parameter (alpha)"; and "Choose uncertainty parameter (gamma^2)".<br>
-   - Choose "Generate GPR Model" to train the model on the provided dataset. This will use default parameters: \alpha=0.5 and \gamma^{2}=1.0E-8.<br>
-   - Buttons "Choose width parameter (alpha)" and "Choose uncertainty parameter (gamma^2)" can be used to enter custom values of the relevant hyperparameters. Note that \alpha must be positive and \gamma^{2} must be non-negative. Once new values are chosen the "Generate GPR Model" must be pressed to (re)generate the GPR model; this is not done automatically.<br>
-<br>
- - Once the "Generate GPR Model" button has been pressed, the model will be trained and the "Open input data file" button will become active. Press this to choose a file containing a set of coordinates, (x^{*}_{j}) where we want to generate predictions of the function value, (f(x^{*}_{j})), using the GPR model. This file must be provided in CSV format. There is no limit on the number of points provided, but they must have the same dimensionality as the training dataset.<br>
-<br>
- - Once an input data file has been provided, the "Generate predictions" button becomes active. Press this to calculate the predicted function values at the provided points.<br>
-<br>
- - After generating predictions, the "Save prediction data file" button becomes active. Press this to save the predictions to a CSV file.<br>
-   - The output file has N+2 columns: the first N contains the coordinates at which the predictions have been made; the (N+1)th holds the predicted function values; the (N+2)th provides the GPR variances at the coordinates (i.e. a measure of the accuracy of the prediction).<br>
-<br>
+<body style="font-family:sans-serif">
+<p><b>Gaussian Process Regression (GPR) Help Text</b></p>
+
+<p>This code will take a one- or multi-dimensional training dataset and run a GPR on the dataset to provide a model, using two hyperparameters (&alpha and &gamma<sup>2</sup>). The user can alter these hyperparameters once the training data has been provided as well as after a fit has been carried out. Once a fit has been performed, the user can provide a new set of coordinates and use the model to generate predictions from those.</p>
+
+<p>The GPR uses a squared-exponential covariance function: exp[-&alpha|<b>x</b>-<b>x</b><sub>i</sub>|<sup>2</sup>]. The function is centred at point <b>x</b>_{i}, its width being controlled by <mo>&alpha</mo> (NB Full-width at half-maximum = 2&#8730(ln(2<sup>1/&alpha</sup>)).</p>
+
+<p>The interface is a simple set of buttons to perform the necessary operations:</p>
+
+<ul>
+<li>Initially only the "Open training data file" button is active. Click this to load a training dataset. The dataset must be in the CSV format, the first N columns being the coordinates (<b>x</b><sub>i</sub>), the (N+1)<sup>th</sup> being the value of the function there (f(<b>x</b><sub>i</sub>)).</li>
+
+<li> Once the training dataset has been loaded, three more buttons become active: "Generate GPR Model"; "Choose width parameter (alpha)"; and "Choose uncertainty parameter (gamma^2)".</li>
+<ul>
+<li>Choose "Generate GPR Model" to train the model on the provided dataset. This will use default parameters: &alpha=0.5 and &gamma<sup>2</sup>=1.0E-8.</li>
+<li>Buttons "Choose width parameter (alpha)" and "Choose uncertainty parameter (gamma^2)" can be used to enter custom values of the relevant hyperparameters. Note that &alpha must be positive and &gamma<sup>2</sup> must be non-negative. Once new values are chosen the "Generate GPR Model" must be pressed to (re)generate the GPR model; this is not done automatically.</li>
+</ul>
+
+<li>After the "Generate GPR Model" button has been pressed, the model will be trained and the "Open input data file" button will become active. Press this to choose a file containing a set of coordinates, (<b>x</b><sup>*</sup><sub>j</sub>) where we want to generate predictions of the function value, (f(<b>x</b><sup>*</sup><sub>j</sub>)), using the GPR model. This file must be provided in CSV format. There is no limit on the number of points provided, but they must have the same dimensionality as the training dataset.</li>
+
+<li>Following an input data file being provided, the "Generate predictions" button becomes active. Press this to calculate the predicted function values at the provided points.</li>
+
+<li>After generating predictions, the "Save prediction data file" button becomes active. Press this to save the predictions to a CSV file.</li>
+<ul>
+<li>The output file has N+2 columns: the first N contains the coordinates at which the predictions have been made; the (N+1)<sup>th</sup> holds the predicted function values; the (N+2)<sup>th</sup> provides the GPR variances at the coordinates (i.e. a measure of the accuracy of the prediction).</li>
+</ul>
+</ul>
+</body>

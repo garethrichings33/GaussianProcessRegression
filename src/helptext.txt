@@ -1,1 +1,22 @@
-Gaussian Process Regress Help Text
+Gaussian Process Regression (GPR) Help Text
+
+This code will take a one- or multi-dimensional training dataset and run a GPR on the dataset to provide a model, using two hyperparameters (\alpha and \gamma^{2}). The user can alter these hyperparameters once the training data has been provided as well as after a fit has been carried out. Once a fit has been performed, the user can provide a new set of coordinates and use the model to generate predictions from those.
+
+ - The GPR uses a squared-exponential covariance function: exp[-\alpha * (x-x_{i})^{2}]. The function is centred at point x_{i}, its width being controlled by \alpha.
+
+The interface is a simple set of buttons to perform the necessary operations:
+
+ - Initially only the "Open training data file" button is active. Click this to load a training dataset. The dataset must be in the CSV format, the first N columns being the coordinates (x_{i}), the (N+1)th being the value of the function there (f(x_{I})).
+ 
+ - Once the training dataset has been loaded, three more buttons become active: "Generate GPR Model"; "Choose width parameter (alpha)"; and "Choose uncertainty parameter (gamma^2)".
+   - Choose "Generate GPR Model" to train the model on the provided dataset. This will use default parameters: \alpha=0.5 and \gamma^{2}=1.0E-8.
+   - Buttons "Choose width parameter (alpha)" and "Choose uncertainty parameter (gamma^2)" can be used to enter custom values of the relevant hyperparameters. Note that \alpha must be positive and \gamma^{2} must be non-negative. Once new values are chosen the "Generate GPR Model" must be pressed to (re)generate the GPR model; this is not done automatically.
+
+ - Once the "Generate GPR Model" button has been pressed, the model will be trained and the "Open input data file" button will become active. Press this to choose a file containing a set of coordinates, (x^{*}_{j}) where we want to generate predictions of the function value, (f(x^{*}_{j})), using the GPR model. This file must be provided in CSV format. There is no limit on the number of points provided, but they must have the same dimensionality as the training dataset. 
+
+ - Once an input data file has been provided, the "Generate predictions" button becomes active. Press this to calculate the predicted function values at the provided points.
+
+ - After generating predictions, the "Save prediction data file" button becomes active. Press this to save the predictions to a CSV file.
+   - The output file has N+2 columns: the first N contains the coordinates at which the predictions have been made; the (N+1)th holds the predicted function values; the (N+2)th provides the GPR variances at the coordinates (i.e. a measure of the accuracy of the prediction). 
+
+

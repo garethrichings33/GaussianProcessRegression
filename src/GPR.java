@@ -122,14 +122,15 @@ public class GPR implements ActionListener {
         }
 
         JFrame helpFrame = new JFrame("How to use");
-        helpFrame.setSize(400,400);
+        helpFrame.setSize(600,600);
 
         JTextArea help = new JTextArea(helpText);
-        int textWidth = frame.getWidth() - 50;
-        int textHeight = frame.getHeight() - 50;
+        int textWidth = helpFrame.getWidth() - 50;
+        int textHeight = helpFrame.getHeight() - 50;
+        System.out.println(textHeight);
         help.setPreferredSize(new Dimension(textWidth, textHeight));
         help.setLineWrap(true);
-        help.setFont(new Font("Arial", Font.PLAIN, 16));
+        help.setFont(new Font("Arial", Font.PLAIN, 14));
         help.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(help);

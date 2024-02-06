@@ -24,6 +24,7 @@ public class GPR implements ActionListener {
     private final JButton howToButton;
     private final JLabel fileMessage;
     private final JLabel message;
+    private final JLabel modelInfo;
     private final JLabel alphaReport;
     private final JLabel gammaReport;
     private final JLabel logMarginalLikelihoodReport;
@@ -45,6 +46,10 @@ public class GPR implements ActionListener {
     private final GPRModelHandler gprModelHandler;
     private final JFileChooser fileChooser;
 
+    private final int labelHeight = 20;
+    private final int buttonHeight = 30;
+    private final int fieldHeight = 20;
+
     public GPR() {
         gprModelHandler = new GPRModelHandler();
 
@@ -56,69 +61,73 @@ public class GPR implements ActionListener {
         trainingFileButtonLabel = "Open training data file";
         trainingFileButton = new JButton(trainingFileButtonLabel);
         trainingFileButton.addActionListener(fileFrame);
-        trainingFileButton.setBounds(30, 20, 200, 30);
+        trainingFileButton.setBounds(30, 20, 200, buttonHeight);
 
         inputDataFileButtonLabel = "Open input data file";
         inputDataFileButton = new JButton(inputDataFileButtonLabel);
         inputDataFileButton.addActionListener(fileFrame);
-        inputDataFileButton.setBounds(30, 60, 200, 30);
+        inputDataFileButton.setBounds(30, 60, 200, buttonHeight);
         inputDataFileButton.setEnabled(false);
 
         predictionOutputFileButtonLabel = "Save prediction data file";
         predictionOutputFileButton = new JButton(predictionOutputFileButtonLabel);
         predictionOutputFileButton.addActionListener(fileFrame);
-        predictionOutputFileButton.setBounds(30, 100, 200, 30);
+        predictionOutputFileButton.setBounds(30, 100, 200, buttonHeight);
         predictionOutputFileButton.setEnabled(false);
 
         fitButtonLabel = "Generate GPR Model";
         fitButton = new JButton(fitButtonLabel);
         fitButton.addActionListener(this);
-        fitButton.setBounds(30, 140, 200, 30);
+        fitButton.setBounds(30, 140, 200, buttonHeight);
         fitButton.setEnabled(false);
 
         predictionsButtonLabel = "Calculate predictions";
         predictionsButton = new JButton(predictionsButtonLabel);
         predictionsButton.addActionListener(this);
-        predictionsButton.setBounds(30, 180, 200, 30);
+        predictionsButton.setBounds(30, 180, 200, buttonHeight);
         predictionsButton.setEnabled(false);
 
         chooseAlphaButtonLabel = "Choose width parameter (alpha)";
         chooseAlphaButton= new JButton(chooseAlphaButtonLabel);
         chooseAlphaButton.addActionListener(this);
-        chooseAlphaButton.setBounds(30, 220, 250, 30);
+        chooseAlphaButton.setBounds(30, 220, 250, buttonHeight);
         chooseAlphaButton.setEnabled(false);
 
         chooseGammaButtonLabel = "Choose uncertainty parameter (gamma^2)";
         chooseGammaButton= new JButton(chooseGammaButtonLabel);
         chooseGammaButton.addActionListener(this);
-        chooseGammaButton.setBounds(30, 260, 300, 30);
+        chooseGammaButton.setBounds(30, 260, 300, buttonHeight);
         chooseGammaButton.setEnabled(false);
 
         howToButtonLabel = "How to use";
         howToButton = new JButton(howToButtonLabel);
         howToButton.addActionListener(this);
-        howToButton.setBounds(290,430,100,30);
+        howToButton.setBounds(290,frame.getHeight()-70,100,buttonHeight);
+
+        modelInfo = new JLabel("Model information: ");
+        modelInfo.setBounds(20, 310, 150, labelHeight);
 
         alphaReport = new JLabel();
-        alphaReport.setBounds(20, 310, 200, 30);
+        alphaReport.setBounds(30, 330, 200, labelHeight);
 
         gammaReport = new JLabel();
-        gammaReport.setBounds(20, 340, 200, 30);
+        gammaReport.setBounds(30, 350, 200, labelHeight);
 
         logMarginalLikelihoodReport = new JLabel();
-        logMarginalLikelihoodReport.setBounds(20, 370, 300, 30);
+        logMarginalLikelihoodReport.setBounds(30, 370, 300, labelHeight);
 
         fileMessage = new JLabel();
-        fileMessage.setBounds(20, 410, 360, 30);
+        fileMessage.setBounds(20, 410, 360, labelHeight);
 
         message = new JLabel();
-        message.setBounds(20, 440, 360, 30);
+        message.setBounds(20, 430, 360, labelHeight);
 
         frame.add(trainingFileButton);
         frame.add(inputDataFileButton);
         frame.add(predictionOutputFileButton);
         frame.add(fileMessage);
         frame.add(message);
+        frame.add(modelInfo);
         frame.add(alphaReport);
         frame.add(gammaReport);
         frame.add(logMarginalLikelihoodReport);
@@ -174,13 +183,13 @@ public class GPR implements ActionListener {
         alphaFrame.setSize(frameWidth, frameHeight);
 
         JLabel label = new JLabel("Input alpha value: ");
-        label.setBounds(10, 10, 120, 20);
+        label.setBounds(10, 10, 120, labelHeight);
 
         JLabel error = new JLabel();
-        error.setBounds(10,40, 200, 20);
+        error.setBounds(10,40, 200, labelHeight);
 
         JTextField alphaField = new JTextField();
-        alphaField.setBounds(130, 10, 200, 20);
+        alphaField.setBounds(130, 10, 200, fieldHeight);
         alphaField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -223,13 +232,13 @@ public class GPR implements ActionListener {
         gammaFrame.setSize(frameWidth, frameHeight);
 
         JLabel label = new JLabel("Input gamma^2 value: ");
-        label.setBounds(10, 10, 120, 20);
+        label.setBounds(10, 10, 120, labelHeight);
 
         JLabel error = new JLabel();
-        error.setBounds(10,40, 300, 20);
+        error.setBounds(10,40, 300, labelHeight);
 
         JTextField gammaField = new JTextField();
-        gammaField.setBounds(130, 10, 200, 20);
+        gammaField.setBounds(130, 10, 200, fieldHeight);
         gammaField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

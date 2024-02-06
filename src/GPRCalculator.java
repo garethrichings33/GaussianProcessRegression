@@ -67,13 +67,13 @@ public class GPRCalculator {
                 - VectorVectorOperations.dotProduct(kVector, covarianceVector);
     }
 
-    public double getLogMarginalLikelihood(){
+    public double calculateLogMarginalLikelihood(){
         if(!modelGenerated)
             throw new IllegalStateException("Cannot get log marginal likelihood before generating model.");
-        return getLogMarginalLikelihood(modelCovariance, modelWeights);
+        return calculateLogMarginalLikelihood(modelCovariance, modelWeights);
     }
 
-    private double getLogMarginalLikelihood(double covariance[][], double weights[]){
+    private double calculateLogMarginalLikelihood(double covariance[][], double weights[]){
         double logK = covariance[0][0];
         for(int i = 1; i< numberOfData; i++)
             logK += covariance[i][i];
@@ -142,7 +142,7 @@ public class GPRCalculator {
         Cholesky.cholesky(covariance);
         weights = getWeights(covariance);
 
-        return getLogMarginalLikelihood(covariance,weights);
+        return calculateLogMarginalLikelihood(covariance,weights);
     }
 
     private double derivativeOfLogMargLike(double alpha, double gammaSquared){
@@ -157,7 +157,7 @@ public class GPRCalculator {
         weights = getWeights(covariance);
         covarianceDerivative = alphaDerivativeOfCovariance(alpha);
 
-//      First term int the derivative is the product of the weight vector and the derivative mateix.
+//      First term int the derivative is the product of the weight vector and the derivative matrix.
         double derivative =
                 VectorVectorOperations.dotProduct(weights, MatrixVectorOperations.matrixVectorProduct(covarianceDerivative, weights));
 

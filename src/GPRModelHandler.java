@@ -6,6 +6,8 @@ public class GPRModelHandler {
     private boolean modelCreated = false;
     private boolean predictionsGenerated = false;
 
+    private boolean inputDataProvided = false;
+
     public void initialiseGPR(String trainingFileName){
         CSVHandler dataCSV = new CSVHandler(trainingFileName);
         trainingDataTensor = null;
@@ -31,8 +33,13 @@ public class GPRModelHandler {
         setPredictionsGenerated(false);
 
         String message = "";
-        if(!dataSetIsValid())
-            message ="Input data structure does not match training set.";
+        if(!dataSetIsValid()) {
+            message = "Input data structure does not match training set.";
+            inputDataProvided = false;
+        }
+        else
+            inputDataProvided = true;
+
         return message;
     }
 
@@ -82,6 +89,10 @@ public class GPRModelHandler {
         return predictionsGenerated;
     }
 
+    public boolean isInputDataProvided() {
+        return inputDataProvided;
+    }
+
     public void setModelAlpha(double alpha){
         gprCalculator.setModelAlpha(alpha);
     }
@@ -94,7 +105,7 @@ public class GPRModelHandler {
     public double getModelGammaSquared(){
         return gprCalculator.getModelGammaSquared();
     }
-
+    public double getLogMarginalLikelihood() {return gprCalculator.calculateLogMarginalLikelihood();}
     private void setModelCreated(boolean modelCreated) {
         this.modelCreated = modelCreated;
     }

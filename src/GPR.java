@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class GPR implements ActionListener {
@@ -21,10 +22,11 @@ public class GPR implements ActionListener {
     private final JButton chooseAlphaButton;
     private final JButton chooseGammaButton;
     private final JButton howToButton;
-    private final JLabel label;
+    private final JLabel fileMessage;
     private final JLabel message;
-    private final JLabel alphaLabel;
-    private final JLabel gammaLabel;
+    private final JLabel alphaReport;
+    private final JLabel gammaReport;
+    private final JLabel logMarginalLikelihoodReport;
 
     private final String trainingFileButtonLabel;
     private final String inputDataFileButtonLabel;
@@ -74,7 +76,7 @@ public class GPR implements ActionListener {
         fitButton.setBounds(30, 140, 200, 30);
         fitButton.setEnabled(false);
 
-        predictionsButtonLabel = "Generate predictions";
+        predictionsButtonLabel = "Calculate predictions";
         predictionsButton = new JButton(predictionsButtonLabel);
         predictionsButton.addActionListener(this);
         predictionsButton.setBounds(30, 180, 200, 30);
@@ -97,14 +99,17 @@ public class GPR implements ActionListener {
         howToButton.addActionListener(this);
         howToButton.setBounds(290,430,100,30);
 
-        alphaLabel = new JLabel();
-        alphaLabel.setBounds(20, 310, 200, 30);
+        alphaReport = new JLabel();
+        alphaReport.setBounds(20, 310, 200, 30);
 
-        gammaLabel = new JLabel();
-        gammaLabel.setBounds(20, 340, 200, 30);
+        gammaReport = new JLabel();
+        gammaReport.setBounds(20, 340, 200, 30);
 
-        label = new JLabel();
-        label.setBounds(20, 410, 360, 30);
+        logMarginalLikelihoodReport = new JLabel();
+        logMarginalLikelihoodReport.setBounds(20, 370, 300, 30);
+
+        fileMessage = new JLabel();
+        fileMessage.setBounds(20, 410, 360, 30);
 
         message = new JLabel();
         message.setBounds(20, 440, 360, 30);
@@ -112,10 +117,11 @@ public class GPR implements ActionListener {
         frame.add(trainingFileButton);
         frame.add(inputDataFileButton);
         frame.add(predictionOutputFileButton);
-        frame.add(label);
+        frame.add(fileMessage);
         frame.add(message);
-        frame.add(alphaLabel);
-        frame.add(gammaLabel);
+        frame.add(alphaReport);
+        frame.add(gammaReport);
+        frame.add(logMarginalLikelihoodReport);
         frame.add(fitButton);
         frame.add(predictionsButton);
         frame.add(chooseAlphaButton);
@@ -186,7 +192,10 @@ public class GPR implements ActionListener {
                     message.setText("Alpha set to: " + gprModelHandler.getModelAlpha());
                     error.setText("");
                     alphaFrame.setSize(frameWidth,frameHeight);
-                    setAlphaLabel();
+                    setAlphaReport();
+                    unsetLogMarginalLikelihoodReport();
+                    predictionsButton.setEnabled(false);
+                    predictionOutputFileButton.setEnabled(false);
                 }
                 catch (NumberFormatException excp){
                     alphaFrame.setSize(frameWidth, 100);
@@ -233,7 +242,10 @@ public class GPR implements ActionListener {
                     message.setText("Gamma^2 set to: " + gprModelHandler.getModelGammaSquared());
                     error.setText("");
                     gammaFrame.setSize(frameWidth,frameHeight);
-                    setGammaSquaredLabel();
+                    setGammaSquaredReport();
+                    unsetLogMarginalLikelihoodReport();
+                    predictionsButton.setEnabled(false);
+                    predictionOutputFileButton.setEnabled(false);
                 }
                 catch (NumberFormatException excp){
                     gammaFrame.setSize(frameWidth, 100);
@@ -261,7 +273,9 @@ public class GPR implements ActionListener {
         if(command.equals(fitButtonLabel)){
             if(!gprModelHandler.gprCalculatorIsNull()) {
                 message.setText(gprModelHandler.createModel());
+                setLogMarginalLikelihoodReport();
                 inputDataFileButton.setEnabled(true);
+                predictionsButton.setEnabled(gprModelHandler.isInputDataProvided());
             }
             else
                 message.setText("Add training set before creating model.");
@@ -276,11 +290,9 @@ public class GPR implements ActionListener {
         }
         else if (command.equals(chooseAlphaButtonLabel)) {
             chooseAlpha();
-            predictionOutputFileButton.setEnabled(false);
         }
         else if (command.equals(chooseGammaButtonLabel)) {
             chooseGamma();
-            predictionOutputFileButton.setEnabled(false);
         }
         else if (command.equals(howToButtonLabel)) {
             displayhelp();
@@ -302,16 +314,16 @@ public class GPR implements ActionListener {
                 dialog = fileChooser.showOpenDialog(null);
                 if(dialog == JFileChooser.APPROVE_OPTION) {
                     trainingFileName = fileChooser.getSelectedFile().getAbsolutePath();
-                    label.setText("Training file: " + fileChooser.getSelectedFile().getName());
+                    fileMessage.setText("Training file: " + fileChooser.getSelectedFile().getName());
                     gprModelHandler.initialiseGPR(trainingFileName);
                     fitButton.setEnabled(true);
                     chooseAlphaButton.setEnabled(true);
-                    setAlphaLabel();
+                    setAlphaReport();
                     chooseGammaButton.setEnabled(true);
-                    setGammaSquaredLabel();
+                    setGammaSquaredReport();
                 }
                 else
-                    label.setText("Open training file cancelled.");
+                    fileMessage.setText("Open training file cancelled.");
             }
             else if(command.equals(inputDataFileButtonLabel)) {
                 if (!gprModelHandler.isModelCreated())
@@ -320,11 +332,11 @@ public class GPR implements ActionListener {
                     dialog = fileChooser.showOpenDialog(null);
                     if (dialog == JFileChooser.APPROVE_OPTION) {
                         inputDataFileName = fileChooser.getSelectedFile().getAbsolutePath();
-                        label.setText("Data file: " + fileChooser.getSelectedFile().getName());
+                        fileMessage.setText("Data file: " + fileChooser.getSelectedFile().getName());
                         message.setText(gprModelHandler.addData(inputDataFileName));
                         predictionsButton.setEnabled(true);
                     } else
-                        label.setText("Open input data file cancelled.");
+                        fileMessage.setText("Open input data file cancelled.");
                 }
             }
             else if(command.equals(predictionOutputFileButtonLabel)){
@@ -335,11 +347,11 @@ public class GPR implements ActionListener {
                     dialog = fileChooser.showSaveDialog(null);
                     if(dialog == JFileChooser.APPROVE_OPTION) {
                         predictionsFileName = fileChooser.getSelectedFile().getAbsolutePath();
-                        label.setText("Predictions file: " + fileChooser.getSelectedFile().getName());
+                        fileMessage.setText("Predictions file: " + fileChooser.getSelectedFile().getName());
                         message.setText(gprModelHandler.savePredictions(predictionsFileName));
                     }
                     else
-                        label.setText("Save predictions file cancelled");
+                        fileMessage.setText("Save predictions file cancelled");
                 }
             }
         }
@@ -362,11 +374,21 @@ public class GPR implements ActionListener {
 
     }
 
-    private void setAlphaLabel(){
-        alphaLabel.setText("Alpha = " + gprModelHandler.getModelAlpha());
+    private void setAlphaReport(){
+        alphaReport.setText("Alpha = " + gprModelHandler.getModelAlpha());
     }
 
-    private void setGammaSquaredLabel(){
-        gammaLabel.setText("Gamma^2 = " + gprModelHandler.getModelGammaSquared());
+    private void setGammaSquaredReport(){
+        gammaReport.setText("Gamma^2 = " + gprModelHandler.getModelGammaSquared());
+    }
+
+    private void setLogMarginalLikelihoodReport(){
+        var decimalFormat = new DecimalFormat("########.##");
+        logMarginalLikelihoodReport.setText("Log marginal likelihood = "
+                + decimalFormat.format(gprModelHandler.getLogMarginalLikelihood()));
+    }
+
+    private void unsetLogMarginalLikelihoodReport(){
+        logMarginalLikelihoodReport.setText("Regenerate model for log marginal likelihood.");
     }
 }

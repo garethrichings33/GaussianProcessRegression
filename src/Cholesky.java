@@ -42,6 +42,4 @@ public class Cholesky {
         }
         return output;
     }
-
-
 }

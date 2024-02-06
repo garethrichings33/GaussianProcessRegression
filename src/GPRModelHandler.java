@@ -96,16 +96,21 @@ public class GPRModelHandler {
     public void setModelAlpha(double alpha){
         gprCalculator.setModelAlpha(alpha);
     }
+
     public double getModelAlpha(){
         return gprCalculator.getModelAlpha();
     }
+
     public void setModelGammaSquared(double alpha){
         gprCalculator.setModelGammaSquared(alpha);
     }
+
     public double getModelGammaSquared(){
         return gprCalculator.getModelGammaSquared();
     }
+
     public double getLogMarginalLikelihood() {return gprCalculator.calculateLogMarginalLikelihood();}
+
     private void setModelCreated(boolean modelCreated) {
         this.modelCreated = modelCreated;
     }

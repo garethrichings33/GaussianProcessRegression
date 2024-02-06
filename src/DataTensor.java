@@ -2,13 +2,9 @@ public class DataTensor {
     private double[][] coordinates;
     private double[] values;
     private double[] variances;
-
     private boolean hasVariance;
-
     private int dimensions;
-
     private int numberOfData;
-
     private int totalColumns;
 
     public DataTensor(int numberOfData, int dimensions) {
@@ -27,6 +23,7 @@ public class DataTensor {
             totalColumns++;
         }
     }
+
     public void setCoordinates(int index, double[] coordinateVector) {
         for(int i =0; i<dimensions; i++)
             coordinates[index][i] = coordinateVector[i];

@@ -68,7 +68,7 @@ public class GPRHandler implements ActionListener {
         predictionOutputFileButton.setBounds(30, 100, 200, buttonHeight);
         predictionOutputFileButton.setEnabled(false);
 
-        fitButtonLabel = "Generate GPRHandler Model";
+        fitButtonLabel = "Generate GPR Model";
         fitButton = new JButton(fitButtonLabel);
         fitButton.addActionListener(this);
         fitButton.setBounds(30, 140, 200, buttonHeight);

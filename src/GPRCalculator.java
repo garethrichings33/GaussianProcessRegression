@@ -154,7 +154,7 @@ public class GPRCalculator {
 
 //      First term in the derivative is the product of the weight vector and the derivative matrix.
         double derivative =
-                VectorVectorOperations.dotProduct(weights, MatrixVectorOperations.matrixVectorProduct(covarianceDerivative, weights));
+                VectorVectorOperations.dotProduct(weights, MatrixVectorOperations.squareMatrixVectorProduct(covarianceDerivative, weights));
 
 //      Second term is the trace of the product of the inverse and the derivative of the covariance matrix.
         double[] tempVector = new double[numberOfData];

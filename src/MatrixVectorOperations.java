@@ -1,7 +1,10 @@
 public class MatrixVectorOperations {
-    static public double[] matrixVectorProduct(double matrix[][], double vector[]){
-        if(vector.length != matrix.length && matrix.length != matrix[0].length)
+    static public double[] squareMatrixVectorProduct(double matrix[][], double vector[]){
+        if(!matrixAndVectorDimentionsMatch(matrix, vector))
             throw new IllegalStateException("Matrix and vector dimensions do not match.");
+        if(!matrixIsSquare(matrix))
+            throw new IllegalStateException("Matrix is not square.");
+
         double[] result = new double[vector.length];
         int length = vector.length;
         for(int i = 0; i < length; i++){
@@ -10,5 +13,12 @@ public class MatrixVectorOperations {
                 result[i] += matrix[i][j] * vector[j];
         }
         return result;
+    }
+
+    static boolean matrixAndVectorDimentionsMatch(double matrix[][], double vector[]){
+        return matrix.length == matrix[0].length;
+    }
+    static boolean matrixIsSquare(double[][] matrix){
+        return matrix.length == matrix[0].length;
     }
 }

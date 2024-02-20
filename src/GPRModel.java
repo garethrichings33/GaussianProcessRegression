@@ -1,4 +1,4 @@
-public class GPRModelHandler {
+public class GPRModel {
     private GPRCalculator gprCalculator = null;
     private DataTensor trainingDataTensor;
     private DataTensor inputDataTensor;
@@ -8,6 +8,10 @@ public class GPRModelHandler {
 
     private boolean inputDataProvided = false;
 
+    private double alpha = 0.5;
+
+    private double gammaSquared = 1.0e-8;
+
     public void initialiseGPR(String trainingFileName){
         CSVHandler dataCSV = new CSVHandler(trainingFileName);
         trainingDataTensor = null;
@@ -16,7 +20,7 @@ public class GPRModelHandler {
         }catch (IllegalArgumentException illArgExcp){
             System.out.println("Illegal tensor type.");
         }
-        gprCalculator = new GPRCalculator(trainingDataTensor);
+        gprCalculator = new GPRCalculator(trainingDataTensor, alpha, gammaSquared);
         setNewTrainingSet();
     }
 
@@ -25,7 +29,6 @@ public class GPRModelHandler {
         inputDataTensor = null;
         try {
             inputDataTensor = DataReader.csvToTensor(predictionCSV, "prediction");
-//            predictionTensor.writeDataVector();
         }catch (IllegalArgumentException illArgExcp){
             System.out.println("Illegal tensor type.");
         }
@@ -93,20 +96,22 @@ public class GPRModelHandler {
         return inputDataProvided;
     }
 
-    public void setModelAlpha(double alpha){
-        gprCalculator.setModelAlpha(alpha);
+    public void setAlpha(double alpha){
+        this.alpha = alpha;
+        gprCalculator.setAlpha(alpha);
     }
 
-    public double getModelAlpha(){
-        return gprCalculator.getModelAlpha();
+    public double getAlpha(){
+        return alpha;
     }
 
-    public void setModelGammaSquared(double alpha){
-        gprCalculator.setModelGammaSquared(alpha);
+    public void setGammaSquared(double gammaSquared){
+        this.gammaSquared = gammaSquared;
+        gprCalculator.setGammaSquared(gammaSquared);
     }
 
-    public double getModelGammaSquared(){
-        return gprCalculator.getModelGammaSquared();
+    public double getGammaSquared(){
+        return this.gammaSquared;
     }
 
     public double getLogMarginalLikelihood() {return gprCalculator.calculateLogMarginalLikelihood();}

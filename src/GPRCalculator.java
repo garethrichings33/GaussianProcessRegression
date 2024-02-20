@@ -6,13 +6,11 @@ public class GPRCalculator {
     private int numberOfData;
     private int dimensions;
     private boolean modelGenerated;
-
-    private double modelAlpha = 0.5;
-
-    private double modelGammaSquared = 1.0e-8;
+    private double alpha;
+    private double gammaSquared;
 
     DataTensor data;
-    public GPRCalculator(DataTensor data) {
+    public GPRCalculator(DataTensor data, double alpha, double gammaSquared) {
         numberOfData = data.getNumberOfData();
         dimensions = data.getDimensions();
         modelCovariance = new double[numberOfData][numberOfData];
@@ -20,12 +18,15 @@ public class GPRCalculator {
         modelWeights = new double[numberOfData];
         modelGenerated = false;
         this.data = data;
+
+        this.alpha = alpha;
+        this.gammaSquared = gammaSquared;
     }
 
     public void createModel(){
-        while(modelAlpha < 100) {
+        while(alpha < 100) {
             try {
-                modelCovariance = createCovariance(modelAlpha, modelGammaSquared);
+                modelCovariance = createCovariance(alpha, gammaSquared);
                 Cholesky.cholesky(modelCovariance);
                 break;
             }
@@ -34,10 +35,10 @@ public class GPRCalculator {
                 return;
             }
             catch (IllegalStateException ex) {
-                modelAlpha *= 2;
+                alpha *= 2;
             }
         }
-        if(modelAlpha > 100){
+        if(alpha > 100){
             System.out.println("Cannot create model: Alpha hyperparameter too large.");
             return;
         }
@@ -51,7 +52,7 @@ public class GPRCalculator {
             throw new IllegalStateException("Cannot get predictions before generating model.");
         double prediction = 0.0;
         for(int i = 0; i < numberOfData; i++)
-            prediction += modelWeights[i] * evaluateKernel(coordinates, data.getCoordinates(i), modelAlpha);
+            prediction += modelWeights[i] * evaluateKernel(coordinates, data.getCoordinates(i), alpha);
         return prediction;
     }
 
@@ -60,12 +61,12 @@ public class GPRCalculator {
             throw new IllegalStateException("Cannot get variance before generating model.");
         double kVector[] = new double[numberOfData];
         for(int i = 0; i < numberOfData; i++)
-            kVector[i] = evaluateKernel(coordinates, data.getCoordinates(i), modelAlpha);
+            kVector[i] = evaluateKernel(coordinates, data.getCoordinates(i), alpha);
         double[] covarianceVector;
         covarianceVector = Cholesky.solveCholesky(modelCovariance, kVector);
 
-        return evaluateKernel(coordinates, coordinates, modelAlpha)
-                + modelGammaSquared
+        return evaluateKernel(coordinates, coordinates, alpha)
+                + gammaSquared
                 - VectorVectorOperations.dotProduct(kVector, covarianceVector);
     }
 
@@ -87,7 +88,7 @@ public class GPRCalculator {
 //        double[] alphas = {100, modelAlpha, 0.0};
 //        initialBracketing(alphas, modelGammaSquared);
 //        System.out.println(alphas[0] + " , " + alphas[1] + " , " + alphas[2]);
-        System.out.println(derivativeOfLogMargLike(modelAlpha, modelGammaSquared));
+        System.out.println(derivativeOfLogMargLike(alpha, gammaSquared));
     }
 
     public void writeWeights(){
@@ -98,20 +99,20 @@ public class GPRCalculator {
             System.out.println(i + ": " + modelWeights[i]);
     }
 
-    public double getModelAlpha() {
-        return modelAlpha;
+    public double getAlpha() {
+        return alpha;
     }
 
-    public void setModelAlpha(double modelAlpha) {
-        this.modelAlpha = modelAlpha;
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
     }
 
-    public double getModelGammaSquared() {
-        return modelGammaSquared;
+    public double getGammaSquared() {
+        return gammaSquared;
     }
 
-    public void setModelGammaSquared(double modelGammaSquared) {
-        this.modelGammaSquared = modelGammaSquared;
+    public void setGammaSquared(double gammaSquared) {
+        this.gammaSquared = gammaSquared;
     }
 
     private double[][] createCovariance(double alpha, double gammaSquared){
@@ -159,7 +160,7 @@ public class GPRCalculator {
         weights = getWeights(covariance);
         covarianceDerivative = alphaDerivativeOfCovariance(alpha);
 
-//      First term int the derivative is the product of the weight vector and the derivative matrix.
+//      First term in the derivative is the product of the weight vector and the derivative matrix.
         double derivative =
                 VectorVectorOperations.dotProduct(weights, MatrixVectorOperations.matrixVectorProduct(covarianceDerivative, weights));
 

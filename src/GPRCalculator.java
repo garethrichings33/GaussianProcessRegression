@@ -99,16 +99,8 @@ public class GPRCalculator {
             System.out.println(i + ": " + modelWeights[i]);
     }
 
-    public double getAlpha() {
-        return alpha;
-    }
-
     public void setAlpha(double alpha) {
         this.alpha = alpha;
-    }
-
-    public double getGammaSquared() {
-        return gammaSquared;
     }
 
     public void setGammaSquared(double gammaSquared) {

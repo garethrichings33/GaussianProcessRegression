@@ -21,6 +21,7 @@ public class GPRCalculator {
         modelGenerated = false;
         this.data = data;
     }
+
     public void createModel(){
         while(modelAlpha < 100) {
             try {
@@ -53,6 +54,7 @@ public class GPRCalculator {
             prediction += modelWeights[i] * evaluateKernel(coordinates, data.getCoordinates(i), modelAlpha);
         return prediction;
     }
+
     public double getVariance(double[] coordinates){
         if(!modelGenerated)
             throw new IllegalStateException("Cannot get variance before generating model.");

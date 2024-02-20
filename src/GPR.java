@@ -28,7 +28,6 @@ public class GPR implements ActionListener {
     private final JLabel alphaReport;
     private final JLabel gammaReport;
     private final JLabel logMarginalLikelihoodReport;
-
     private final String trainingFileButtonLabel;
     private final String inputDataFileButtonLabel;
     private final String predictionOutputFileButtonLabel;
@@ -42,10 +41,8 @@ public class GPR implements ActionListener {
     private String predictionsFileName = null;
     private String helpText;
     private boolean helpNotRead = true;
-
     private final GPRModelHandler gprModelHandler;
     private final JFileChooser fileChooser;
-
     private final int labelHeight = 20;
     private final int buttonHeight = 30;
     private final int fieldHeight = 20;
@@ -168,8 +165,6 @@ public class GPR implements ActionListener {
 
         JScrollPane scrollPane = new JScrollPane(help);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        scrollPane.set;
 
         helpFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -279,33 +274,36 @@ public class GPR implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if(command.equals(fitButtonLabel)){
-            if(!gprModelHandler.gprCalculatorIsNull()) {
-                message.setText(gprModelHandler.createModel());
-                setLogMarginalLikelihoodReport();
-                inputDataFileButton.setEnabled(true);
-                predictionsButton.setEnabled(gprModelHandler.isInputDataProvided());
-            }
-            else
-                message.setText("Add training set before creating model.");
-        }
-        else if (command.equals(predictionsButtonLabel)) {
-            if(gprModelHandler.isModelCreated()) {
-                message.setText(gprModelHandler.getPredictions());
-                predictionOutputFileButton.setEnabled(true);
-            }
-            else
-                message.setText("Create model before getting predictions.");
-        }
-        else if (command.equals(chooseAlphaButtonLabel)) {
+        if(command.equals(fitButtonLabel))
+            fitButtonPressed();
+        else if (command.equals(predictionsButtonLabel))
+            predictionButtonPressed();
+        else if (command.equals(chooseAlphaButtonLabel))
             chooseAlpha();
-        }
-        else if (command.equals(chooseGammaButtonLabel)) {
+        else if (command.equals(chooseGammaButtonLabel))
             chooseGamma();
-        }
-        else if (command.equals(howToButtonLabel)) {
+        else if (command.equals(howToButtonLabel))
             displayhelp();
+    }
+
+    private void predictionButtonPressed() {
+        if(gprModelHandler.isModelCreated()) {
+            message.setText(gprModelHandler.getPredictions());
+            predictionOutputFileButton.setEnabled(true);
         }
+        else
+            message.setText("Create model before getting predictions.");
+    }
+
+    private void fitButtonPressed() {
+        if(!gprModelHandler.gprCalculatorIsNull()) {
+            message.setText(gprModelHandler.createModel());
+            setLogMarginalLikelihoodReport();
+            inputDataFileButton.setEnabled(true);
+            predictionsButton.setEnabled(gprModelHandler.isInputDataProvided());
+        }
+        else
+            message.setText("Add training set before creating model.");
     }
 
     private class FrameWithActionListener extends JFrame implements ActionListener{

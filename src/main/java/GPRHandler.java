@@ -366,7 +366,8 @@ public class GPRHandler implements ActionListener {
         StringBuilder builder = new StringBuilder();
         try {
 //            Scanner scanner = new Scanner(new File("../resources/helptext.txt"));
-            Scanner scanner = new Scanner(this.getClass().getClassLoader().getResourceAsStream("helptext.txt"));
+            Scanner scanner =
+                    new Scanner(this.getClass().getClassLoader().getResourceAsStream("helptext.txt"));
             while(scanner.hasNextLine()){
                 builder.append(scanner.nextLine());
             }

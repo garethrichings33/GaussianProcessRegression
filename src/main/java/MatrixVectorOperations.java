@@ -1,3 +1,4 @@
+package main.java;
 public class MatrixVectorOperations {
     static public double[] squareMatrixVectorProduct(double matrix[][], double vector[]){
         if(!matrixAndVectorDimentionsMatch(matrix, vector))

@@ -1,3 +1,4 @@
+package main.java;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.text.SimpleAttributeSet;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class GPRHandler implements ActionListener {
     private final JFrame frame;
@@ -363,14 +365,16 @@ public class GPRHandler implements ActionListener {
     private void getHelpText(){
         StringBuilder builder = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new File("src/helptext.txt"));
+//            Scanner scanner = new Scanner(new File("../resources/helptext.txt"));
+            Scanner scanner = new Scanner(this.getClass().getClassLoader().getResourceAsStream("helptext.txt"));
             while(scanner.hasNextLine()){
                 builder.append(scanner.nextLine());
             }
             scanner.close();
             helpText = builder.toString();
         }
-        catch (FileNotFoundException excp){
+//        catch (FileNotFoundException excp){
+        catch (NullPointerException excp){
             helpText = "Help file not found.";
             message.setText(helpText);
         }

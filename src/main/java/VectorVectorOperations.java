@@ -1,3 +1,4 @@
+package main.java;
 public class VectorVectorOperations {
     static public double dotProduct(double first[], double second[]){
         if(lengthsUnequal(first, second))

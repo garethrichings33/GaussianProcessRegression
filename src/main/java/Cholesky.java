@@ -1,3 +1,4 @@
+package main.java;
 public class Cholesky {
     static public void cholesky(double matrix[][]){
         int size = matrix.length;

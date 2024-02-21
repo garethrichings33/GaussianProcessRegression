@@ -5,14 +5,17 @@ public class Cholesky {
         if(size != matrix[0].length)
             throw new IllegalArgumentException("Matrix is not square.");
 
+        if(!isSymmetric(matrix))
+            throw new IllegalArgumentException("Matrix is not symmetric.");
+
         double sum;
         for(int i =0; i<size; i++){
-            for(int j=0; j<size;j++){
+            for(int j=i; j<size;j++){
                 sum = matrix[i][j];
                 for(int k = i-1; k>=0; k--)
                     sum -= matrix[i][k]* matrix[j][k];
                 if(i==j){
-                    if(sum < 0)
+                    if(sum <= 0)
                         throw new IllegalStateException("Matrix is not positive-definite");
                     matrix[i][i] = Math.sqrt(sum);
                 }
@@ -20,6 +23,15 @@ public class Cholesky {
                     matrix[j][i] = sum / matrix[i][i];
             }
         }
+    }
+
+    private static boolean isSymmetric(double[][] matrix) {
+        for(int i = 0; i < matrix.length; i++)
+            for(int j = i+1; j < matrix.length; j++)
+                if(matrix[i][j] != matrix[j][i])
+                    return false;
+
+        return true;
     }
 
     static public double[] solveCholesky(double[][] matrix, double[] input){

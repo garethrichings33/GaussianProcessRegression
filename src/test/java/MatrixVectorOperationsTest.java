@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixVectorOperationsTest {
+    final double delta = 1.0E-12;
 
     @Nested
     class squareMatrixVectorProductTests {
@@ -39,7 +40,7 @@ class MatrixVectorOperationsTest {
             double[] vector = {1, 2};
             double[] zeroVector = {0, 0};
 
-            assertArrayEquals(zeroVector, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector));
+            assertArrayEquals(zeroVector, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector), delta);
         }
 
         @Test
@@ -48,7 +49,7 @@ class MatrixVectorOperationsTest {
             double[][] matrix = {{1, 0}, {0, 1}};
             double[] vector = {1, 2};
 
-            assertArrayEquals(vector, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector));
+            assertArrayEquals(vector, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector), delta);
         }
 
         @Test
@@ -58,7 +59,7 @@ class MatrixVectorOperationsTest {
             double[] vector = {5, 6};
             double[] expected = {17, 39};
 
-            assertArrayEquals(expected, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector));
+            assertArrayEquals(expected, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector), delta);
         }
     }
 }

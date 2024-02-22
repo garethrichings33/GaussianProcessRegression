@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VectorVectorOperationsTest {
-
+    final double delta = 1.0E-12;
     @Nested
     class dotProductTests {
         @Test
@@ -27,7 +27,7 @@ class VectorVectorOperationsTest {
             double[] vector1 = {0, 0};
             double[] vector2 = {0, 0};
 
-            assertEquals(0.0, VectorVectorOperations.dotProduct(vector1, vector2));
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector1, vector2), delta);
         }
 
         @Test
@@ -38,9 +38,9 @@ class VectorVectorOperationsTest {
             double[] vector3 = {1, 1};
             double[] vector4 = {1, -1};
 
-            assertEquals(0.0, VectorVectorOperations.dotProduct(vector1, vector2));
-            assertEquals(0.0, VectorVectorOperations.dotProduct(vector2, vector1));
-            assertEquals(0.0, VectorVectorOperations.dotProduct(vector3, vector4));
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector1, vector2), delta);
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector2, vector1), delta);
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector3, vector4), delta);
         }
 
         @Test
@@ -51,8 +51,8 @@ class VectorVectorOperationsTest {
             double[] vector3 = {0, 1};
             double[] vector4 = {0, 1};
 
-            assertEquals(1.0, VectorVectorOperations.dotProduct(vector1, vector2));
-            assertEquals(1.0, VectorVectorOperations.dotProduct(vector3, vector4));
+            assertEquals(1.0, VectorVectorOperations.dotProduct(vector1, vector2), delta);
+            assertEquals(1.0, VectorVectorOperations.dotProduct(vector3, vector4), delta);
         }
 
         @Test
@@ -61,7 +61,7 @@ class VectorVectorOperationsTest {
             double[] vector1 = {1, 1};
             double[] vector2 = {-1, -1};
 
-            assertEquals(-2.0, VectorVectorOperations.dotProduct(vector1, vector2));
+            assertEquals(-2.0, VectorVectorOperations.dotProduct(vector1, vector2), delta);
         }
     }
 
@@ -86,7 +86,7 @@ class VectorVectorOperationsTest {
             double[] vector1 = {1, 2};
             double[] expected = {0, 0};
 
-            assertArrayEquals(expected, VectorVectorOperations.difference(vector1, vector1));
+            assertArrayEquals(expected, VectorVectorOperations.difference(vector1, vector1), delta);
         }
 
         @Test
@@ -97,8 +97,8 @@ class VectorVectorOperationsTest {
             double[] expected = {3, -2, -4};
             double[] expectedMinus = {-3, 2, 4};
 
-            assertArrayEquals(expected, VectorVectorOperations.difference(vector1, vector2));
-            assertArrayEquals(expectedMinus, VectorVectorOperations.difference(vector2, vector1));
+            assertArrayEquals(expected, VectorVectorOperations.difference(vector1, vector2), delta);
+            assertArrayEquals(expectedMinus, VectorVectorOperations.difference(vector2, vector1), delta);
         }
     }
 }

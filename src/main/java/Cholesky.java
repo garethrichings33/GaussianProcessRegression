@@ -1,4 +1,3 @@
-package main.java;
 public class Cholesky {
     static public void cholesky(double matrix[][]){
         int size = matrix.length;
@@ -25,15 +24,6 @@ public class Cholesky {
         }
     }
 
-    private static boolean isSymmetric(double[][] matrix) {
-        for(int i = 0; i < matrix.length; i++)
-            for(int j = i+1; j < matrix.length; j++)
-                if(matrix[i][j] != matrix[j][i])
-                    return false;
-
-        return true;
-    }
-
     static public double[] solveCholesky(double[][] matrix, double[] input){
         int size = matrix.length;
         if(size != matrix.length || size != matrix[0].length)
@@ -55,4 +45,14 @@ public class Cholesky {
         }
         return output;
     }
+
+    private static boolean isSymmetric(double[][] matrix) {
+        for(int i = 0; i < matrix.length; i++)
+            for(int j = i+1; j < matrix.length; j++)
+                if(matrix[i][j] != matrix[j][i])
+                    return false;
+
+        return true;
+    }
+
 }

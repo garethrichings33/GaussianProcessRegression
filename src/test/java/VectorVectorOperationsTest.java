@@ -1,12 +1,7 @@
-package test.java;
-
-import main.java.VectorVectorOperations;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static main.java.VectorVectorOperations.difference;
-import static main.java.VectorVectorOperations.dotProduct;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VectorVectorOperationsTest {
@@ -21,7 +16,7 @@ class VectorVectorOperationsTest {
 
             assertThrows(IllegalStateException.class,
                     () -> {
-                        dotProduct(vector1, vector2);
+                        VectorVectorOperations.dotProduct(vector1, vector2);
                     }
             );
         }
@@ -32,7 +27,7 @@ class VectorVectorOperationsTest {
             double[] vector1 = {0, 0};
             double[] vector2 = {0, 0};
 
-            assertEquals(0.0, dotProduct(vector1, vector2));
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector1, vector2));
         }
 
         @Test
@@ -43,9 +38,9 @@ class VectorVectorOperationsTest {
             double[] vector3 = {1, 1};
             double[] vector4 = {1, -1};
 
-            assertEquals(0.0, dotProduct(vector1, vector2));
-            assertEquals(0.0, dotProduct(vector2, vector1));
-            assertEquals(0.0, dotProduct(vector3, vector4));
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector1, vector2));
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector2, vector1));
+            assertEquals(0.0, VectorVectorOperations.dotProduct(vector3, vector4));
         }
 
         @Test
@@ -56,8 +51,8 @@ class VectorVectorOperationsTest {
             double[] vector3 = {0, 1};
             double[] vector4 = {0, 1};
 
-            assertEquals(1.0, dotProduct(vector1, vector2));
-            assertEquals(1.0, dotProduct(vector3, vector4));
+            assertEquals(1.0, VectorVectorOperations.dotProduct(vector1, vector2));
+            assertEquals(1.0, VectorVectorOperations.dotProduct(vector3, vector4));
         }
 
         @Test
@@ -66,7 +61,7 @@ class VectorVectorOperationsTest {
             double[] vector1 = {1, 1};
             double[] vector2 = {-1, -1};
 
-            assertEquals(-2.0, dotProduct(vector1, vector2));
+            assertEquals(-2.0, VectorVectorOperations.dotProduct(vector1, vector2));
         }
     }
 
@@ -80,7 +75,7 @@ class VectorVectorOperationsTest {
 
             assertThrows(IllegalStateException.class,
                     () -> {
-                        difference(vector1, vector2);
+                        VectorVectorOperations.difference(vector1, vector2);
                     }
             );
         }
@@ -91,7 +86,7 @@ class VectorVectorOperationsTest {
             double[] vector1 = {1, 2};
             double[] expected = {0, 0};
 
-            assertArrayEquals(expected, difference(vector1, vector1));
+            assertArrayEquals(expected, VectorVectorOperations.difference(vector1, vector1));
         }
 
         @Test
@@ -102,8 +97,8 @@ class VectorVectorOperationsTest {
             double[] expected = {3, -2, -4};
             double[] expectedMinus = {-3, 2, 4};
 
-            assertArrayEquals(expected, difference(vector1, vector2));
-            assertArrayEquals(expectedMinus, difference(vector2, vector1));
+            assertArrayEquals(expected, VectorVectorOperations.difference(vector1, vector2));
+            assertArrayEquals(expectedMinus, VectorVectorOperations.difference(vector2, vector1));
         }
     }
 }

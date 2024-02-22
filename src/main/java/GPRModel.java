@@ -1,4 +1,3 @@
-package main.java;
 public class GPRModel {
     private GPRCalculator gprCalculator = null;
     private DataTensor trainingDataTensor;

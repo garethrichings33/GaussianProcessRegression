@@ -1,4 +1,3 @@
-package main.java;
 public class GPRCalculator {
     private double modelCovariance[][];
     private double variance[];

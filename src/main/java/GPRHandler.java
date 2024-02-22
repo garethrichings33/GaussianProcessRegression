@@ -1,14 +1,11 @@
-package main.java;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.text.DecimalFormat;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class GPRHandler implements ActionListener {
     private final JFrame frame;

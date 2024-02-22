@@ -1,4 +1,3 @@
-package main.java;
 import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;

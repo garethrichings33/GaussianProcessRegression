@@ -1,12 +1,9 @@
-package test.java;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static main.java.MatrixVectorOperations.squareMatrixVectorProduct;
 class MatrixVectorOperationsTest {
 
     @Nested
@@ -19,7 +16,7 @@ class MatrixVectorOperationsTest {
 
             assertThrows(IllegalStateException.class,
                     () -> {
-                        squareMatrixVectorProduct(matrix, vector);
+                        MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector);
                     });
         }
 
@@ -31,7 +28,7 @@ class MatrixVectorOperationsTest {
 
             assertThrows(IllegalStateException.class,
                     () -> {
-                        squareMatrixVectorProduct(matrix, vector);
+                        MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector);
                     });
         }
 
@@ -42,7 +39,7 @@ class MatrixVectorOperationsTest {
             double[] vector = {1, 2};
             double[] zeroVector = {0, 0};
 
-            assertArrayEquals(zeroVector, squareMatrixVectorProduct(matrix, vector));
+            assertArrayEquals(zeroVector, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector));
         }
 
         @Test
@@ -51,7 +48,7 @@ class MatrixVectorOperationsTest {
             double[][] matrix = {{1, 0}, {0, 1}};
             double[] vector = {1, 2};
 
-            assertArrayEquals(vector, squareMatrixVectorProduct(matrix, vector));
+            assertArrayEquals(vector, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector));
         }
 
         @Test
@@ -61,7 +58,7 @@ class MatrixVectorOperationsTest {
             double[] vector = {5, 6};
             double[] expected = {17, 39};
 
-            assertArrayEquals(expected, squareMatrixVectorProduct(matrix, vector));
+            assertArrayEquals(expected, MatrixVectorOperations.squareMatrixVectorProduct(matrix, vector));
         }
     }
 }

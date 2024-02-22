@@ -1,6 +1,3 @@
-package test.java;
-
-import static main.java.Cholesky.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,7 +13,7 @@ class CholeskyTest {
             double[][] matrix = {{1, 0, 0}, {0, 1, 0}};
 
             assertThrows(IllegalArgumentException.class, () -> {
-                cholesky(matrix);
+                Cholesky.cholesky(matrix);
             });
         }
 
@@ -26,7 +23,7 @@ class CholeskyTest {
             double[][] matrix = {{1, 2}, {3, 4}};
 
             assertThrows(IllegalArgumentException.class, () -> {
-                cholesky(matrix);
+                Cholesky.cholesky(matrix);
             });
         }
 
@@ -36,7 +33,7 @@ class CholeskyTest {
             double[][] matrix = {{1, 1}, {1, 1}};
 
             assertThrows(IllegalStateException.class, () -> {
-                cholesky(matrix);
+                Cholesky.cholesky(matrix);
             });
         }
 
@@ -45,7 +42,7 @@ class CholeskyTest {
         void choleskyDiagonalMatrix(){
             double[][] matrix = {{1, 0, 0}, {0, 2, 0}, {0, 0, 3}};
 
-            cholesky(matrix);
+            Cholesky.cholesky(matrix);
 
             assertEquals(1, matrix[0][0]);
             assertEquals(0, matrix[1][0]);
@@ -60,7 +57,7 @@ class CholeskyTest {
         void cholesky2By2Matrix(){
             double[][] matrix = {{1.0, 0.5}, {0.5, 1.0}};
 
-            cholesky(matrix);
+            Cholesky.cholesky(matrix);
 
             assertEquals(1.0, matrix[0][0]);
             assertEquals(0.5, matrix[1][0]);

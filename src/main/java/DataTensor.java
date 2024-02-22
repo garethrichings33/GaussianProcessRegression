@@ -1,4 +1,3 @@
-package main.java;
 public class DataTensor {
     private double[][] coordinates;
     private double[] values;
